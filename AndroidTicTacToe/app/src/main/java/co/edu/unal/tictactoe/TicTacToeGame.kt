@@ -2,8 +2,22 @@ package co.edu.unal.tictactoe
 
 import kotlin.random.Random
 
+
 class TicTacToeGame {
 
+    enum class DifficultyLevel {
+        Easy, Harder, Expert
+    }
+
+    private var mDifficultyLevel: DifficultyLevel = DifficultyLevel.Easy
+
+    fun getDifficultyLevel(): DifficultyLevel? {
+        return mDifficultyLevel
+    }
+
+    fun setDifficultyLevel(difficultyLevel: DifficultyLevel) {
+        mDifficultyLevel = difficultyLevel
+    }
 
     private var mBoard = charArrayOf(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ')
     val BOARD_SIZE = 9
@@ -15,6 +29,8 @@ class TicTacToeGame {
     constructor() {
 
     }
+
+
 
     // Check for a winner.  Return
     //  0 if no winner or tie yet
@@ -75,9 +91,29 @@ class TicTacToeGame {
         }
     }
 
-    fun getComputerMove(): Int{
-        var move: Int
+    fun getComputerMove(): Int {
+        var move: Int = -1
 
+        if (mDifficultyLevel == DifficultyLevel.Easy){
+            move = getRandomMove();
+        }else if(mDifficultyLevel == DifficultyLevel.Harder){
+            move = getWinningMove();
+            if (move == -1){
+                move = getRandomMove();
+            }
+        }else if (mDifficultyLevel == DifficultyLevel.Expert) {
+            move = getWinningMove();
+            if (move == -1) {
+                move = getBlockingMove()
+            }
+            if (move == -1) {
+                move = getRandomMove()
+            }
+        }
+        return move
+    }
+
+    fun getWinningMove(): Int{
         // First see if there's a move O can make to win
         for (i in 0 until BOARD_SIZE) {
             if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
@@ -86,10 +122,16 @@ class TicTacToeGame {
                 if (checkForWinner() == 3) {
                     println("Computer is moving to " + (i + 1))
                     return i
-                } else mBoard[i] = curr
+                } else{
+                    mBoard[i] = curr
+                }
             }
         }
+        return -1
+    }
 
+
+    fun getBlockingMove(): Int{
         // See if there's a move O can make to block X from winning
         for (i in 0 until BOARD_SIZE) {
             if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER) {
@@ -102,14 +144,20 @@ class TicTacToeGame {
                 } else mBoard[i] = curr
             }
         }
+        return -1
+    }
+
+    fun getRandomMove(): Int{
+        var move: Int;
         // Generate random move
         do {
             move = Random.nextInt(BOARD_SIZE)
         } while (mBoard[move] == HUMAN_PLAYER || mBoard[move] == COMPUTER_PLAYER)
-        println("Computer is moving to " + (move + 1))
-        mBoard[move] = COMPUTER_PLAYER
-        return move
+        setMove(COMPUTER_PLAYER, move)
+        return move;
     }
+
+
 
 
 }
