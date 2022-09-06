@@ -31,6 +31,9 @@ class TicTacToeGame {
     }
 
 
+    fun getBoardOccupant(pos: Int): Char{
+        return mBoard[pos]
+    }
 
     // Check for a winner.  Return
     //  0 if no winner or tie yet
@@ -85,10 +88,12 @@ class TicTacToeGame {
         mBoard = charArrayOf(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ')
     }
 
-    fun setMove(player: Char, location: Int) {
+    fun setMove(player: Char, location: Int): Boolean {
         if (mBoard[location] == OPEN_SPOT) {
             mBoard[location] = player
+            return true
         }
+        return false
     }
 
     fun getComputerMove(): Int {
