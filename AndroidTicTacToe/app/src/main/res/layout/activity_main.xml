@@ -24,10 +24,43 @@
         android:id="@+id/difficulty"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="150dp"
         android:gravity="center_horizontal"
         android:text="difficulty"
         android:textSize="20dp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:weightSum="3">
+        <TextView
+            android:id="@+id/resultHuman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:text="Result"
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/resultTie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="Result"
+            android:layout_weight="1"
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/resultCpu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:text="Result"
+            android:textSize="20dp" />
+    </LinearLayout>
+
 
 
 </LinearLayout>

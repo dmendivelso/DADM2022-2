@@ -1,5 +1,6 @@
 package co.edu.unal.tictactoe
 
+import android.content.SharedPreferences
 import kotlin.random.Random
 
 
@@ -10,6 +11,8 @@ class TicTacToeGame {
     }
 
     private var mDifficultyLevel: DifficultyLevel = DifficultyLevel.Easy
+    private var winnerLine: Int = 0
+
 
     fun getDifficultyLevel(): DifficultyLevel? {
         return mDifficultyLevel
@@ -30,6 +33,9 @@ class TicTacToeGame {
 
     }
 
+    fun getwinnerLine(): Int{
+        return winnerLine
+    }
 
     fun getBoardOccupant(pos: Int): Char{
         return mBoard[pos]
@@ -45,30 +51,42 @@ class TicTacToeGame {
         // Check horizontal wins
         for (i in 0..6 step 3) {
             if (mBoard[i] == HUMAN_PLAYER && mBoard[i + 1] == HUMAN_PLAYER && mBoard[i + 2] == HUMAN_PLAYER) {
+                winnerLine = (i / 3) + 1
                 return 2
             }
             if (mBoard[i] == COMPUTER_PLAYER && mBoard[i + 1] == COMPUTER_PLAYER && mBoard[i + 2] == COMPUTER_PLAYER) {
+                winnerLine = (i / 3) + 1
                 return 3
             }
+
         }
         // Check vertical wins
         for (i in 0..2) {
             if (mBoard[i] == HUMAN_PLAYER && mBoard[i + 3] == HUMAN_PLAYER && mBoard[i + 6] == HUMAN_PLAYER) {
+                winnerLine = 4 + i
                 return 2
             }
             if (mBoard[i] == COMPUTER_PLAYER && mBoard[i + 3] == COMPUTER_PLAYER && mBoard[i + 6] == COMPUTER_PLAYER) {
+                winnerLine = 4 + i
                 return 3
             }
         }
 
         // Check for diagonal wins
-        if ((mBoard[0] == HUMAN_PLAYER && mBoard[4] == HUMAN_PLAYER && mBoard[8] == HUMAN_PLAYER) ||
-            (mBoard[2] == HUMAN_PLAYER && mBoard[4] == HUMAN_PLAYER && mBoard[6] == HUMAN_PLAYER)){
+        if (mBoard[0] == HUMAN_PLAYER && mBoard[4] == HUMAN_PLAYER && mBoard[8] == HUMAN_PLAYER){
+            winnerLine = 7
             return 2
         }
-
-        if ((mBoard[0] == COMPUTER_PLAYER && mBoard[4] == COMPUTER_PLAYER && mBoard[8] == COMPUTER_PLAYER) ||
-            (mBoard[2] == COMPUTER_PLAYER && mBoard[4] == COMPUTER_PLAYER && mBoard[6] == COMPUTER_PLAYER)){
+        if(mBoard[2] == HUMAN_PLAYER && mBoard[4] == HUMAN_PLAYER && mBoard[6] == HUMAN_PLAYER){
+            winnerLine = 8
+            return 2
+        }
+        if (mBoard[0] == COMPUTER_PLAYER && mBoard[4] == COMPUTER_PLAYER && mBoard[8] == COMPUTER_PLAYER){
+            winnerLine = 7
+            return 3
+        }
+        if(mBoard[2] == COMPUTER_PLAYER && mBoard[4] == COMPUTER_PLAYER && mBoard[6] == COMPUTER_PLAYER){
+            winnerLine = 8
             return 3
         }
 
@@ -77,6 +95,7 @@ class TicTacToeGame {
         for (i in 0 until BOARD_SIZE) {
             // If we find a number, then no one has won yet
             if (mBoard[i] != HUMAN_PLAYER && mBoard[i] != COMPUTER_PLAYER){
+                winnerLine = 0
                 return 0
             }
         }
@@ -162,7 +181,15 @@ class TicTacToeGame {
         return move;
     }
 
+    fun getBoardState(): CharArray? {
+        return mBoard
+    }
 
+    fun setBoardState(board: CharArray?){
+        if (board != null) {
+            mBoard = board
+        }
+    }
 
 
 }
