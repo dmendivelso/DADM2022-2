@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         outState.putInt("startPlay", startPlay)
         outState.putBoolean("winLine", mBoardView.getWinLineBool())
         outState.putInt("winLineNum", mBoardView.getWinLineInt())
+        outState.putBoolean("humanTurn", humanTurn)
+        outState.putBoolean("mGameOver", mGameOver)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -114,10 +116,6 @@ class MainActivity : AppCompatActivity() {
         }
         if(savedInstanceState == null){
             startNewGame()
-        }else{
-            if(!handlerflag){
-                playComputer()
-            }
         }
         showResults()
     }
@@ -134,11 +132,11 @@ class MainActivity : AppCompatActivity() {
         val winner = mGame.checkForWinner()
         verifyWin(winner)
         humanTurn = true
+        handlerflag = true
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-
         mGame.setBoardState(savedInstanceState.getCharArray("board"))
         mGameOver = savedInstanceState.getBoolean("mGameOver");
         mInfoTextView.text = savedInstanceState.getCharSequence("info")
@@ -146,7 +144,12 @@ class MainActivity : AppCompatActivity() {
         startPlay = savedInstanceState.getInt("startPlay")
         mBoardView.setWinLineBool(savedInstanceState.getBoolean("winLine"))
         mBoardView.setWinLineInt(savedInstanceState.getInt("winLineNum"))
+        humanTurn = savedInstanceState.getBoolean("humanTurn")
+        mGameOver = savedInstanceState.getBoolean("mGameOver")
         showResults()
+        if(!humanTurn && !mGameOver){
+            playComputer()
+        }
         mBoardView.invalidate()
     }
 
@@ -263,10 +266,17 @@ class MainActivity : AppCompatActivity() {
             resources.getString(R.string.difficulty_harder),
             resources.getString(R.string.difficulty_expert)
         )
+        var checkedItem = when (mGame.getDifficultyLevel()) {
+            TicTacToeGame.DifficultyLevel.Easy -> 0
+            TicTacToeGame.DifficultyLevel.Harder -> 1
+            TicTacToeGame.DifficultyLevel.Expert -> 2
+            else -> -1
+        }
+
         with(builder)
         {
             setTitle(R.string.difficulty_choose);
-            setSingleChoiceItems(levels, -1) { dialogInterface, item ->
+            setSingleChoiceItems(levels, checkedItem) { dialogInterface, item ->
                 when (item) {
                     0 -> {
                         var difficulty = TicTacToeGame.DifficultyLevel.Easy
