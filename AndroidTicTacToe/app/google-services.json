@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "729763509621",
+    "project_id": "tictactoe-4891e",
+    "storage_bucket": "tictactoe-4891e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729763509621:android:7b113f30d004667d440f3c",
+        "android_client_info": {
+          "package_name": "co.edu.unal.tictactoe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729763509621-3m8qvsmus78q8u07vrn42ef5qpua85e6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrzV-4sAMWRcj9sVVEUkehvCx4wARe5ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729763509621-3m8qvsmus78q8u07vrn42ef5qpua85e6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
