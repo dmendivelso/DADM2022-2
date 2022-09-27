@@ -161,7 +161,9 @@ class MainActivity : AppCompatActivity() {
                         mInfoTextView.text = "Waiting rival"
                     }
                 }else{
-                    onBackPressed()
+                    if(numberPlayer == 2){
+                        onBackPressed()
+                    }
                 }
             }
 
