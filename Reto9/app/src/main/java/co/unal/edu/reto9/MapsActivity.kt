@@ -256,6 +256,7 @@ class MapsActivity : AppCompatActivity(),
         return true
     }
 
+    @SuppressLint("MissingPermission")
     fun myLocationZoom() {
         if (ContextCompat.checkSelfPermission(
                 this,
